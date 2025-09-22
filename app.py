@@ -74,16 +74,16 @@ load_dotenv()
 app = Flask(__name__)
 
 # Secret keys for Flask app and reCAPTCHA
-app.config['SECRET_KEY'] = 'iamtomel'
-app.config['RECAPTCHA_PUBLIC_KEY'] = '6LfPEjsqAAAAADQxx2sR1It79r22NC4LAdyrQ0qp'
-app.config['RECAPTCHA_PRIVATE_KEY'] = '6LfPEjsqAAAAAHWMi7l7etJ-fe3rzXkJwWV-uTOe'
+app.config['SECRET_KEY'] = 'the secret key'
+app.config['RECAPTCHA_PUBLIC_KEY'] = 'Your_Puclic_Key'
+app.config['RECAPTCHA_PRIVATE_KEY'] = 'Your_private_key'
 
 # Mail setup with App Password
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'ifahsha04@gmail.com'
-app.config['MAIL_PASSWORD'] = 'rqca xsca fjca nqwi'
+app.config['MAIL_USERNAME'] = 'email@example.com'
+app.config['MAIL_PASSWORD'] = 'Thepassword'
 PREFERRED_URL_SCHEME='http'
 # App Password here
 mail = Mail(app)
@@ -120,20 +120,20 @@ from models.news_model import NewsModel
 
 # Instantiate the NewsModel with your correct paths
 news_model = NewsModel(
-    model_path=r"C:\Users\ifahs\OneDrive\Documents\FYP_Interface\models\best_news_model.pkl",
-    dataset_path=r"C:\Users\ifahs\OneDrive\Documents\FYP_Interface\models\news_model.csv"
+    model_path=r"C:\models\best_news_model.pkl",
+    dataset_path=r"C:\models\news_model.csv"
 )
 
 # File paths based on your specified paths
-DATASET_CSV = r"C:\Users\ifahs\OneDrive\Documents\FYP_Interface\models\news_model.csv"
-SAMPLE_CSV = r"C:\Users\ifahs\OneDrive\Documents\FYP_Interface\Sample\Sample_CSV.csv"
-TEMP_DATASET_CSV = r'C:\Users\ifahs\OneDrive\Documents\FYP_Interface\models\temp_dataset.csv'
+DATASET_CSV = r"C:\models\news_model.csv"
+SAMPLE_CSV = r"C:\Sample\Sample_CSV.csv"
+TEMP_DATASET_CSV = r'C:\models\temp_dataset.csv'
 
 # Paths to the notebook, model, and dataset
-NOTEBOOK_PATH = "C:/Users/ifahs/OneDrive/Documents/FYP_Interface/Fake_News_Detection-master (1)/Fake_News_Detection-master/Fake_News_Detection.ipynb"
-MODEL_PATH = "c:/Users/ifahs/OneDrive/Documents/FYP_Interface/models/best_news_model.pkl"
-DATASET_PATH = "c:/Users/ifahs/OneDrive/Documents/FYP_Interface/models/news_model.csv"
-SAMPLE_CSV_PATH = "C:/Users/ifahs/OneDrive/Documents/FYP_Interface/Sample/Sample_CSV.csv"
+NOTEBOOK_PATH = "C:/Fake_News_Detection.ipynb"
+MODEL_PATH = "c:/models/best_news_model.pkl"
+DATASET_PATH = "c:/models/news_model.csv"
+SAMPLE_CSV_PATH = "C:/Sample/Sample_CSV.csv"
 
 
 def query_db(query, args=(), one=False):
@@ -1559,3 +1559,4 @@ def update_model_status(db, status):
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+
