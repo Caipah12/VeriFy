@@ -1,0 +1,488 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #711CA6, #E93CEC); /* Purple gradient background */
+    color: white;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Flex Layout for the Index Page */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 50px;
+    width: 100%;
+}
+
+/* Left Content (Text) Styling for the Index Page */
+.left-content {
+    max-width: 50%;
+}
+
+.left-content h1 {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+.left-content p {
+    font-size: 1.2em;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+/* Button Styling for the Index Page */
+.button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #ff8c00; /* Orange button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #e67300; /* Darker orange on hover */
+}
+
+/* Right Content (Image) Styling for the Index Page */
+.right-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Header for About Us and Login Links */
+.header {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+.header a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1.2em;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+/* Styles for the Login and Register Pages */
+.login-container, .register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-box, .register-box {
+    background-color: white;
+    border-radius: 10px;
+    padding: 40px;
+    width: 400px;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h1, .register-box h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.login-box p, .register-box p {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-box form div, .register-box form div {
+    margin-bottom: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.button {
+    width: 100%;
+    background-color: #ff8c00;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #e67300;
+}
+
+/* Extras (Forgot Password, Sign Up links) */
+.extras {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.extras a {
+    color: #6a0dad;
+    text-decoration: none;
+}
+
+.extras a:hover {
+    text-decoration: underline;
+}
+
+/* Main Interface Styles */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.main-container h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.main-container textarea {
+    width: 500px;
+    height: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    resize: none;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.main-container button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #6a0dad;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.main-container button:hover {
+    background-color: #551a8b;
+}
+
+/* Admin Dashboard Styles */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #6a0dad;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+.sidebar a:hover {
+    text-decoration: underline;
+}
+
+.dashboard-content {
+    flex-grow: 1;
+    padding: 30px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.dashboard-header h2 {
+    font-size: 2.5em;
+    color: #6a0dad;
+}
+
+.logout-btn {
+    background-color: white;
+    color: #6a0dad;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #6a0dad;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: #6a0dad;
+    color: white;
+}
+
+/* Update these styles in your styles.css file */
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.article-section {
+    flex: 1;
+    margin-bottom: 30px;
+}
+
+.statistics-panel {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 250px;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid rgba(106, 13, 173, 0.1);
+}
+
+.stat-card h3 {
+    color: #6a0dad;
+    margin: 0 0 15px 0;
+    font-size: 1.2em;
+}
+
+.stat-number {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #6a0dad;
+    margin: 0;
+}
+
+.chart-card {
+    height: 250px;
+    position: relative;
+}
+
+/* Make the charts responsive */
+canvas {
+    max-width: 100%;
+    height: 100% !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .stats-container {
+        flex-direction: column;
+    }
+    
+    .stat-card {
+        width: 100%;
+    }
+    
+    .chart-card {
+        height: 300px;
+    }
+}
+
+/* Style improvements for the article section */
+textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(106, 13, 173, 0.2);
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    resize: vertical;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #4a0080;
+}
+
+/* Add smooth transitions */
+.stat-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(106, 13, 173, 0.1);
+}
+
+/* Admin Dashboard Cards */
+.card-container {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    flex: 1;
+    padding: 30px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.card.user-submissions {
+    background-color: #9b59b6;
+}
+
+.card.total-articles {
+    background-color: #f39c12;
+}
+
+.card.flagged-fake {
+    background-color: #e74c3c;
+}
+
+.card.model-status {
+    background-color: #2ecc71;
+    padding: 20px;
+    font-size: 1.2em;
+}
+.admin-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background: #6a0dad; /* Purple background */
+    color: white;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.sidebar ul li.active a,
+.sidebar ul li a:hover {
+    background-color: #E93CEC;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background: #fff;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+.button {
+    color: white;
+    background-color: #ff8c00;
+    border: none;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #e67300;
+}
+.results h2 {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.error p {
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
