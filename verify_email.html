@@ -1,0 +1,71 @@
+<!-- templates/email/verify_email.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #6a0dad 0%, #9932cc 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .content {
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 0 0 10px 10px;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #6a0dad;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to VeriFy!</h1>
+    </div>
+    <div class="content">
+        <h2>Hello {{ username }},</h2>
+        <p>Thank you for registering with VeriFy. To complete your registration and start using our service, please verify your email address by clicking the button below:</p>
+
+        <div style="text-align: center;">
+            <a href="{{ verify_url }}" class="button">Verify Email Address</a>
+        </div>
+        
+        <p>This link will expire in 24 hours. If you did not create an account with VeriFy, please ignore this email.</p>
+        
+        <p>If the button above doesn't work, you can also copy and paste this URL into your browser:</p>
+        <p style="word-break: break-all; color: #666;">{{ verify_url }}</p>
+        
+        <p>Best regards,<br>The VeriFy Team</p>
+    </div>
+    <div class="footer">
+        <p>This is an automated message, please do not reply to this email.</p>
+        <p>© 2024 VeriFy. All rights reserved.</p>
+    </div>
+</body>
+</html>

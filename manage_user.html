@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users - VeriFy Admin</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin_styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>VeriFy</h2>
+            <ul>
+                <li><a href="{{ url_for('admin') }}">Dashboard</a></li>
+                <li class="active"><a href="{{ url_for('manage_user') }}">Manage User</a></li>
+                <li><a href="{{ url_for('manage_dataset') }}">Manage Dataset</a></li>
+                <li><a href="{{ url_for('manage_model') }}">Manage Model</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h2>Manage Users</h2>
+                <div class="admin-info">
+                    <span>Welcome back</span>
+                    <strong>Admin User</strong>
+                    <a href="{{ url_for('logout') }}" class="logout-btn">Log out</a>
+                </div>
+            </div>
+
+            <!-- Users Table Section -->
+            <div class="users-section">
+                <div class="table-container">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Last Login</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>#{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    <span class="role-badge {{ user.role }}">{{ user.role }}</span>
+                                </td>
+                                <td>
+                                    <span class="status-badge {{ user.status }}">{{ user.status }}</span>
+                                </td>
+                                <td>{{ user.last_login|default('Never', true) }}</td>
+                                <td class="actions">
+                                    <button class="action-btn view" onclick="viewUserDetails('{{ user.id }}')">
+                                        View Details
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Details Modal -->
+    <div id="userDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>User Details</h2>
+                <span class="close" onclick="closeModal('userDetailsModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="userDetailsContent"></div>
+                <div class="modal-actions">
+                    <button onclick="toggleUserStatus()" class="action-btn toggle-status">
+                        Toggle Status
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUserId = null;
+
+        function viewUserDetails(userId) {
+            currentUserId = userId;
+            fetch(`/api/user/${userId}`)
+                .then(response => response.json())
+                .then(user => {
+                    const content = `
+                        <div class="user-details">
+                            <p><strong>User ID:</strong> #${user.id}</p>
+                            <p><strong>Username:</strong> ${user.username}</p>
+                            <p><strong>Email:</strong> ${user.email}</p>
+                            <p><strong>Role:</strong> ${user.role}</p>
+                            <p><strong>Status:</strong> ${user.status}</p>
+                            <p><strong>Last Login:</strong> ${user.last_login || 'Never'}</p>
+                        </div>
+                    `;
+                    document.getElementById('userDetailsContent').innerHTML = content;
+                    document.getElementById('userDetailsModal').style.display = 'block';
+                });
+        }
+
+        function toggleUserStatus() {
+            fetch(`/api/user/${currentUserId}/toggle-status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Error updating user status: ' + data.error);
+                }
+            });
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

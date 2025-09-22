@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Model - VeriFy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_styles.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h2>VeriFy</h2>
+            <ul>
+                <li><a href="{{ url_for('admin') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('manage_user') }}">Manage User</a></li>
+                <li><a href="{{ url_for('manage_dataset') }}">Manage Dataset</a></li>
+                <li class="active"><a href="{{ url_for('manage_model') }}">Manage Model</a></li>
+            </ul>
+        </div>
+        
+        <div class="dashboard-content">
+            <div class="model-section">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Model Training Center</h2>
+                        <p class="model-description">
+                            Optimize your model's performance by training it with the latest dataset. 
+                            The training process typically takes a few minutes to complete.
+                        </p>
+                    </div>
+                </div>
+
+                <form id="training-form" action="{{ url_for('initiate_training') }}" method="post">
+                    <button type="submit" class="btn-primary" id="train-button">
+                        <svg class="training-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12a9 9 0 11-9-9c2.52 0 4.85.83 6.72 2.24"></path>
+                            <path d="M21 3v4h-4"></path>
+                        </svg>
+                        <span class="button-text">Initiate Training</span>
+                    </button>
+                </form>
+
+                <div class="loading-bar" id="loading-bar">
+                    <div class="loading-progress" id="loading-progress"></div>
+                    <div class="progress-info">
+                        <span id="progress-text">Processing...</span>
+                        <span id="progress-percentage">0%</span>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 class="stat-title">Training Status</h3>
+                        <div class="status-badge {{ model_status|lower }}">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                {% if model_status == 'Active' %}
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                {% else %}
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12" y2="16"></line>
+                                {% endif %}
+                            </svg>
+                            {{ model_status }}
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3 class="stat-title">Last Training Date</h3>
+                        <div class="stat-value">{{ last_trained }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="flash-message" class="flash-message"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('training-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const loadingBar = document.getElementById('loading-bar');
+            const progress = document.getElementById('loading-progress');
+            const progressText = document.getElementById('progress-text');
+            const progressPercentage = document.getElementById('progress-percentage');
+            const trainButton = document.getElementById('train-button');
+            const buttonText = trainButton.querySelector('.button-text');
+            const icon = trainButton.querySelector('svg');
+            const flashMessage = document.getElementById('flash-message');
+            
+            loadingBar.style.display = 'block';
+            progress.style.width = '0%';
+            trainButton.disabled = true;
+            buttonText.textContent = 'Training in Progress...';
+            icon.classList.add('icon-spin');
+            
+            let width = 0;
+
+            try {
+                const interval = setInterval(() => {
+                    if (width >= 90) {
+                        clearInterval(interval);
+                    } else {
+                        width += Math.random() * 2;
+                        width = Math.min(width, 90);
+                        progress.style.width = width + '%';
+                        progressPercentage.textContent = Math.round(width) + '%';
+                        
+                        if (width < 30) {
+                            progressText.textContent = 'Preparing dataset...';
+                        } else if (width < 60) {
+                            progressText.textContent = 'Training model...';
+                        } else {
+                            progressText.textContent = 'Finalizing...';
+                        }
+                    }
+                }, 200);
+
+                const response = await fetch('/initiate_training', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+
+                clearInterval(interval);
+
+                if (data.success) {
+                    progress.style.width = '100%';
+                    progressPercentage.textContent = '100%';
+                    progressText.textContent = 'Training completed!';
+                    
+                    flashMessage.className = 'flash-message flash-success';
+                    flashMessage.innerHTML = `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        Training completed successfully!
+                    `;
+                    flashMessage.style.display = 'flex';
+
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    throw new Error(data.error || 'Training failed');
+                }
+            } catch (error) {
+                progress.style.width = '0%';
+                progressText.textContent = 'Training failed';
+                progressPercentage.textContent = '0%';
+                
+                flashMessage.className = 'flash-message flash-error';
+                flashMessage.innerHTML = `
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12" y2="16"></line>
+                    </svg>
+                    Error: ${error.message}
+                `;
+                flashMessage.style.display = 'flex';
+            } finally {
+                trainButton.disabled = false;
+                buttonText.textContent = 'Initiate Training';
+                icon.classList.remove('icon-spin');
+                
+                setTimeout(() => {
+                    flashMessage.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>

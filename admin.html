@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin_styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>VeriFy</h2>
+            <ul>
+                <li class="active"><a href="{{ url_for('admin') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('manage_user') }}">Manage User</a></li>
+                <li><a href="{{ url_for('manage_dataset') }}">Manage Dataset</a></li>
+                <li><a href="{{ url_for('manage_model') }}">Manage Model</a></li>
+            </ul>
+        </div>
+        <!-- Main Content -->
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h2>Dashboard</h2>
+                <div class="admin-info">
+                    <span>Welcome back</span>
+                    <strong>Admin User</strong>
+                    <a href="{{ url_for('logout') }}" class="logout-btn">Log out</a>
+                </div>
+            </div>
+            <!-- Stats Section -->
+            <div class="card-container">
+                <div class="card user-submissions">
+                    <div class="card-icon">👥</div>
+                    <div class="card-content">
+                        <h3>User Submissions</h3>
+                        <p class="card-value">{{ user_submissions }}</p>
+                    </div>
+                </div>
+                <div class="card total-articles">
+                    <div class="card-icon">📃</div>
+                    <div class="card-content">
+                        <h3>Total Articles</h3>
+                        <p class="card-value">{{ total_articles }}</p>
+                    </div>
+                </div>
+                <div class="card flagged-fake" onclick="openFakeNewsModal()">
+                    <div class="card-icon">⚠️</div>
+                    <div class="card-content">
+                        <h3>Flagged as Fake</h3>
+                        <p class="card-value">{{ flagged_as_fake }}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Model Status -->
+            <div class="status-card">
+                <div class="status-header">
+                    <h3>Model Status</h3>
+                    <div class="status-indicator {{ 'active' if model_status == 'Active' else 'inactive' }}">
+                        {{ model_status }}
+                    </div>
+                </div>
+                <div class="status-info">
+                    <p>Last Trained: {{ last_trained }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fake News Modal -->
+    <div id="fakeNewsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Fake News Articles</h2>
+                <span class="close" onclick="closeFakeNewsModal()">&times;</span>
+            </div>
+            <div class="modal-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Content</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in fake_articles %}
+                        <tr>
+                            <td>{{ article.id }}</td>
+                            <td>{{ article.content }}</td>
+                            <td>{{ article.created_at }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const modal = document.getElementById("fakeNewsModal");
+
+        function openFakeNewsModal() {
+            modal.style.display = "block";
+        }
+
+        function closeFakeNewsModal() {
+            modal.style.display = "none";
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
